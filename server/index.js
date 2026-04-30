@@ -24,13 +24,14 @@ const upload = multer({
 });
 
 function loadFirebaseAdmin() {
-  const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
+  const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
 
-  if (!serviceAccountPath) {
+  if (!serviceAccountJson) {
     return null;
   }
 
-  const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+  const serviceAccount = JSON.parse(serviceAccountJson);
+  serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
   const credential = admin.credential.cert(serviceAccount);
 
   admin.initializeApp({ credential });
@@ -40,9 +41,10 @@ function loadFirebaseAdmin() {
 const adminDb = loadFirebaseAdmin();
 
 function loadOrdersDb() {
-  const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
-  if (!serviceAccountPath) return null;
-  const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+  const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+  if (!serviceAccountJson) return null;
+  const serviceAccount = JSON.parse(serviceAccountJson);
+  serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
   return new Firestore({
     projectId: serviceAccount.project_id,
     credentials: {
