@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 5%;
+    --foreground: 45 100% 96%;
+    --card: 36 100% 6%;
+    --card-foreground: 45 100% 96%;
+    --popover: 36 100% 6%;
+    --popover-foreground: 45 100% 96%;
+    --primary: 44 86% 60%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 36 100% 10%;
+    --secondary-foreground: 45 100% 96%;
+    --muted: 36 100% 10%;
+    --muted-foreground: 44 50% 60%;
+    --accent: 44 86% 60%;
+    --accent-foreground: 0 0% 5%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 44 80% 40% / 30%;
+    --input: 36 100% 10%;
+    --ring: 44 86% 60%;
+    --radius: 0.625rem;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 45 100% 96%;
+    --sidebar-primary: 44 86% 60%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 36 100% 10%;
+    --sidebar-accent-foreground: 45 100% 96%;
+    --sidebar-border: 44 80% 40% / 30%;
+    --sidebar-ring: 44 86% 60%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
