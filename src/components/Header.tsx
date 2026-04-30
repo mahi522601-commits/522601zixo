@@ -35,8 +35,15 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleOpenOrders = () => setOrdersModalOpen(true);
+    
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("open-orders-modal", handleOpenOrders);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("open-orders-modal", handleOpenOrders);
+    };
   }, []);
 
   return (
