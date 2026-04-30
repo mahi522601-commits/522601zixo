@@ -4,7 +4,6 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router";
 import { useProducts } from "@/context/ProductsContext";
-import MyOrdersModal from "@/components/MyOrdersModal";
 
 export default function Header() {
   const { toggleCart, totalItems } = useCart();
@@ -14,7 +13,6 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [ordersModalOpen, setOrdersModalOpen] = useState(false);
 
   const activeCategories = categories.filter((cat) =>
     products.some((p) => p.category.toLowerCase() === cat.name.toLowerCase())
@@ -82,17 +80,6 @@ export default function Header() {
                 >
                   <Settings className="w-5 h-5" />
                   <span className="hidden lg:inline">Admin Panel</span>
-                </button>
-              )}
-              
-              {user && (
-                <button 
-                  onClick={() => setOrdersModalOpen(true)}
-                  className="flex items-center gap-1.5 text-sm text-[#FFF8E7] hover:text-[#F0C040] transition-colors"
-                  aria-label="My Orders"
-                >
-                  <ClipboardList className="w-5 h-5" />
-                  <span className="hidden lg:inline">My Orders</span>
                 </button>
               )}
               
@@ -204,15 +191,6 @@ export default function Header() {
                   <span className="text-xs font-bold text-[#FFF8E7]">Admin</span>
                 </button>
               )}
-              {user && (
-                <button 
-                  onClick={() => { setOrdersModalOpen(true); setMobileMenuOpen(false); }}
-                  className="flex flex-col items-center justify-center p-4 bg-[#1E1600] rounded-xl border border-[#C9960C]/30 gap-2"
-                >
-                  <ClipboardList className="w-6 h-6 text-[#F0C040]" />
-                  <span className="text-xs font-bold text-[#FFF8E7]">Orders</span>
-                </button>
-              )}
               {user && !user.isAnonymous ? (
                 <button 
                   onClick={() => { logout(); setMobileMenuOpen(false); }}
@@ -275,7 +253,6 @@ export default function Header() {
           </div>
         </div>
       )}
-      <MyOrdersModal isOpen={ordersModalOpen} onClose={() => setOrdersModalOpen(false)} />
     </>
   );
 }
