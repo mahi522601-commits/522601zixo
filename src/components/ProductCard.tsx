@@ -60,9 +60,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
               e.stopPropagation();
               addItem(cartItem);
             }}
-            className="absolute bottom-3 right-3 bg-[#F0C040] text-[#0D0D0D] p-2.5 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-[#C9960C] shadow-lg"
+            className="absolute bottom-3 right-3 bg-[#F0C040] text-[#0D0D0D] p-3 rounded-full md:opacity-0 md:group-hover:opacity-100 md:translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-[#C9960C] shadow-lg flex items-center justify-center min-w-[44px] min-h-[44px]"
+            aria-label={`Add ${product.name} to cart`}
           >
-            <ShoppingBag className="w-4 h-4" />
+            <ShoppingBag className="w-5 h-5" />
           </button>
         </div>
         <div className="p-3">

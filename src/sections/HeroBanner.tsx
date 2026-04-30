@@ -37,7 +37,7 @@ export default function HeroBanner() {
             className="absolute inset-0 h-full w-full object-contain"
           />
         ))}
-        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2">
+        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-0">
           {banners.map((banner, index) => (
             <button
               key={banner.src}
@@ -45,12 +45,14 @@ export default function HeroBanner() {
               aria-label={`Show banner ${index + 1}`}
               aria-pressed={activeBanner === index}
               onClick={() => setActiveBanner(index)}
-              className={`h-2.5 rounded-full transition-all ${
+              className="group p-4 flex items-center justify-center transition-all"
+            >
+              <div className={`h-2.5 rounded-full transition-all ${
                 activeBanner === index
                   ? "w-8 bg-[#F0C040]"
-                  : "w-2.5 bg-[#FFF8E7]/80 hover:bg-[#FFF8E7]"
-              }`}
-            />
+                  : "w-2.5 bg-[#FFF8E7]/40 group-hover:bg-[#FFF8E7]"
+              }`} />
+            </button>
           ))}
         </div>
       </div>

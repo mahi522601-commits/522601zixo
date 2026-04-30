@@ -68,29 +68,32 @@ export default function CartDrawer() {
                         <p className="text-sm text-[#F0C040] font-bold mt-1">
                           Rs. {item.price.toFixed(2)}
                         </p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="p-1 hover:bg-[#2A1E00] rounded text-[#C9960C] transition-colors"
-                          >
-                            <Minus className="w-3 h-3" />
-                          </button>
-                          <span className="text-sm font-bold w-6 text-center">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="p-1 hover:bg-[#2A1E00] rounded text-[#C9960C] transition-colors"
-                          >
-                            <Plus className="w-3 h-3" />
-                          </button>
-                          <button
-                            onClick={() => removeItem(item.id)}
-                            className="ml-auto p-1.5 text-[#FFF8E7]/50 hover:text-red-500 transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
+                          <div className="flex items-center gap-1 mt-2">
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              className="w-10 h-10 flex items-center justify-center hover:bg-[#2A1E00] rounded text-[#C9960C] transition-colors"
+                              aria-label="Decrease quantity"
+                            >
+                              <Minus className="w-4 h-4" />
+                            </button>
+                            <span className="text-sm font-bold w-8 text-center">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="w-10 h-10 flex items-center justify-center hover:bg-[#2A1E00] rounded text-[#C9960C] transition-colors"
+                              aria-label="Increase quantity"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => removeItem(item.id)}
+                              className="ml-auto w-10 h-10 flex items-center justify-center text-[#FFF8E7]/50 hover:text-red-500 transition-colors"
+                              aria-label="Remove item"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                       </div>
                     </motion.div>
                   ))}

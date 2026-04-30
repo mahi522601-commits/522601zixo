@@ -89,29 +89,29 @@ export default function OrdersDashboard() {
       
       <div className="grid gap-6">
         {orders.map(order => (
-          <div key={order.id} className="bg-[#1E1600] p-6 rounded-lg border border-[#C9960C]/30 shadow-md text-[#FFF8E7]">
-            <div className="flex justify-between items-start mb-4 pb-4 border-b border-[#C9960C]/30">
-              <div>
+          <div key={order.id} className="bg-[#1E1600] p-4 sm:p-6 rounded-lg border border-[#C9960C]/30 shadow-md text-[#FFF8E7]">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4 pb-4 border-b border-[#C9960C]/30">
+              <div className="w-full sm:w-auto">
                 <h3 className="font-bold text-lg text-[#F0C040] tracking-wide">{order.customerName}</h3>
-                <p className="text-sm font-medium text-[#FFF8E7]/80">{order.customerEmail} | {order.customerPhone}</p>
+                <p className="text-sm font-medium text-[#FFF8E7]/80 break-all">{order.customerEmail} | {order.customerPhone}</p>
                 <p className="text-sm text-[#FFF8E7]/70 mt-1 max-w-sm">{order.customerAddress}</p>
                 <p className="text-xs font-bold text-[#C9960C] mt-2">{new Date(order.createdAt).toLocaleString()}</p>
               </div>
-              <div className="text-right flex flex-col items-end gap-2">
+              <div className="w-full sm:w-auto flex flex-row sm:flex-col justify-between sm:items-end items-center gap-2">
                 <div className="flex items-center gap-3">
-                  <p className="font-bold text-xl text-[#F0C040]">Rs. {order.totalAmount?.toFixed(2)}</p>
+                  <p className="font-bold text-lg sm:text-xl text-[#F0C040]">Rs. {order.totalAmount?.toFixed(2)}</p>
                   <button 
                     onClick={() => deleteOrder(order.id)}
-                    className="p-1.5 text-[#FFF8E7]/50 hover:text-red-400 bg-[#2A1E00] hover:bg-red-900/30 border border-[#C9960C]/30 rounded-md transition-colors"
+                    className="p-3 sm:p-1.5 text-[#FFF8E7]/50 hover:text-red-400 bg-[#2A1E00] hover:bg-red-900/30 border border-[#C9960C]/30 rounded-md transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                     title="Delete Order"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-5 h-5 sm:w-4 sm:h-4" />
                   </button>
                 </div>
                 <select 
                   value={order.status}
                   onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                  className={`mt-2 text-sm border rounded p-1.5 font-bold outline-none cursor-pointer bg-[#1E1600]
+                  className={`text-sm border rounded p-2 sm:p-1.5 font-bold outline-none cursor-pointer bg-[#1E1600] min-h-[40px]
                     ${order.status === 'Pending' ? 'text-yellow-400 border-yellow-500/30 bg-yellow-900/20' : 
                       order.status === 'Processing' ? 'text-blue-400 border-blue-500/30 bg-blue-900/20' :
                       order.status === 'Shipped' ? 'text-purple-400 border-purple-500/30 bg-purple-900/20' :

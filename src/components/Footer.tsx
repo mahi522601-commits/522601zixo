@@ -27,12 +27,13 @@ export default function Footer() {
           {/* Column 2: Social */}
           <div>
             <h3 className="font-bold text-[#F0C040] mb-4">Follow us</h3>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-4">
               <a 
                 href="https://www.instagram.com/zixo_cookies?igsh=emcwcWxzdDhlMjll" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 bg-[#1E1600] border border-[#C9960C]/30 text-[#C9960C] rounded-full hover:bg-[#F0C040] hover:text-[#0D0D0D] transition-colors flex items-center justify-center"
+                className="w-11 h-11 bg-[#1E1600] border border-[#C9960C]/30 text-[#C9960C] rounded-full hover:bg-[#F0C040] hover:text-[#0D0D0D] transition-colors flex items-center justify-center"
+                aria-label="Follow us on Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -40,7 +41,8 @@ export default function Footer() {
                 href="https://youtube.com/@subhani-04?si=UKbUXMagvsmJn_MI" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 bg-[#1E1600] border border-[#C9960C]/30 text-[#C9960C] rounded-full hover:bg-[#F0C040] hover:text-[#0D0D0D] transition-colors flex items-center justify-center"
+                className="w-11 h-11 bg-[#1E1600] border border-[#C9960C]/30 text-[#C9960C] rounded-full hover:bg-[#F0C040] hover:text-[#0D0D0D] transition-colors flex items-center justify-center"
+                aria-label="Follow us on Youtube"
               >
                 <Youtube className="w-5 h-5" />
               </a>
@@ -60,7 +62,7 @@ export default function Footer() {
                 <li key={link}>
                   <button 
                     onClick={() => setSelectedPolicy(link)}
-                    className="text-sm text-[#FFF8E7]/80 hover:text-[#F0C040] transition-colors text-left"
+                    className="min-h-[44px] text-sm text-[#FFF8E7]/80 hover:text-[#F0C040] transition-colors text-left"
                   >
                     {link}
                   </button>

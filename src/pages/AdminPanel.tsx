@@ -216,32 +216,32 @@ export default function AdminPanel() {
   return (
     <main className="min-h-screen bg-[#0D0D0D] text-[#FFF8E7]">
       <div className="border-b border-[#C9960C]/30 bg-[#0D0D0D] sticky top-0 z-10">
-        <div className="container-main flex h-16 items-center justify-between gap-4">
+        <div className="container-main flex flex-wrap h-auto sm:h-16 items-center justify-between gap-4 py-3 sm:py-0">
           <a href="/" className="flex items-center gap-3">
             <img
               src="/images/logo.jpeg"
               alt="Zixo Cookies"
-              className="h-11 w-11 rounded-full object-cover border border-[#C9960C]/30"
+              className="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover border border-[#C9960C]/30"
             />
-            <span className="text-lg font-bold tracking-wide text-[#F0C040] hidden sm:inline">ZIXOCOOKIES Admin</span>
+            <span className="text-base sm:text-lg font-bold tracking-wide text-[#F0C040]">Admin Panel</span>
           </a>
           
-          <div className="flex bg-[#1E1600] p-1 rounded-lg border border-[#C9960C]/20">
+          <div className="flex flex-wrap bg-[#1E1600] p-1 rounded-lg border border-[#C9960C]/20 w-full sm:w-auto order-last sm:order-none">
             <button
               onClick={() => setActiveTab("products")}
-              className={`px-4 py-1.5 rounded-md text-sm font-bold transition-colors ${activeTab === "products" ? "bg-[#F0C040] text-[#0D0D0D]" : "text-[#FFF8E7]/70 hover:text-[#F0C040]"}`}
+              className={`flex-1 sm:flex-none px-4 py-2 rounded-md text-sm font-bold transition-colors ${activeTab === "products" ? "bg-[#F0C040] text-[#0D0D0D]" : "text-[#FFF8E7]/70 hover:text-[#F0C040]"}`}
             >
               Products
             </button>
             <button
               onClick={() => setActiveTab("orders")}
-              className={`px-4 py-1.5 rounded-md text-sm font-bold transition-colors ${activeTab === "orders" ? "bg-[#F0C040] text-[#0D0D0D]" : "text-[#FFF8E7]/70 hover:text-[#F0C040]"}`}
+              className={`flex-1 sm:flex-none px-4 py-2 rounded-md text-sm font-bold transition-colors ${activeTab === "orders" ? "bg-[#F0C040] text-[#0D0D0D]" : "text-[#FFF8E7]/70 hover:text-[#F0C040]"}`}
             >
               Orders
             </button>
             <button
               onClick={() => setActiveTab("users")}
-              className={`px-4 py-1.5 rounded-md text-sm font-bold transition-colors ${activeTab === "users" ? "bg-[#F0C040] text-[#0D0D0D]" : "text-[#FFF8E7]/70 hover:text-[#F0C040]"}`}
+              className={`flex-1 sm:flex-none px-4 py-2 rounded-md text-sm font-bold transition-colors ${activeTab === "users" ? "bg-[#F0C040] text-[#0D0D0D]" : "text-[#FFF8E7]/70 hover:text-[#F0C040]"}`}
             >
               Users
             </button>
@@ -250,7 +250,8 @@ export default function AdminPanel() {
           <button
             type="button"
             onClick={loadData}
-            className="inline-flex h-10 items-center gap-2 rounded-md border border-[#C9960C]/30 bg-[#1E1600] px-4 text-sm font-bold text-[#FFF8E7] hover:bg-[#2A1E00] transition-colors"
+            className="inline-flex h-10 items-center gap-2 rounded-md border border-[#C9960C]/30 bg-[#1E1600] px-4 text-sm font-bold text-[#FFF8E7] hover:bg-[#2A1E00] transition-colors min-w-[44px]"
+            aria-label="Refresh Data"
           >
             <RefreshCcw className="h-4 w-4" />
             <span className="hidden sm:inline">Refresh</span>
