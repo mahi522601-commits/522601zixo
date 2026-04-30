@@ -4,8 +4,6 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { ImagePlus, Loader2, CheckCircle2 } from "lucide-react";
 import { BASE_URL } from "@/services/firebaseProducts";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function Checkout() {
   const { state, totalPrice, clearCart } = useCart();
@@ -114,37 +112,33 @@ export default function Checkout() {
       
       const screenshotUrl = uploadData.data.url;
 
-      // 2. Submit order directly to Firestore
+      // 2. Submit order
       const orderData = {
         customerUid: user?.uid || "",
         customerName: form.name,
         customerEmail: form.email,
         customerPhone: form.phone,
         customerAddress: `${form.address}, ${form.city}, ${form.district} - ${form.pincode}`,
-        items: state.items.map(item => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          image: item.image
-        })),
+        items: state.items,
         totalAmount: totalPrice,
         paymentScreenshotUrl: screenshotUrl,
         status: "Pending",
         trackingDetails: "",
-        createdAt: serverTimestamp(),
       };
 
-      console.log("Placing order:", orderData);
-      
-      const ordersRef = collection(db, "orders");
-      await addDoc(ordersRef, orderData);
+      const orderRes = await fetch(`${BASE_URL}/api/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData),
+      });
 
-      console.log("Order placed successfully!");
+      if (!orderRes.ok) {
+        throw new Error("Failed to place order.");
+      }
+
       setIsSuccess(true);
       clearCart();
     } catch (err) {
-      console.error("Order error:", err);
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setIsSubmitting(false);
