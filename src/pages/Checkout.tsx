@@ -97,7 +97,10 @@ export default function Checkout() {
       // 1. Upload screenshot
       const formData = new FormData();
       formData.append("image", screenshot);
-      const uploadRes = await fetch(`${BASE_URL}/api/upload-image`, {
+      
+      const API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
+      
+      const uploadRes = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
         method: "POST",
         body: formData,
       });

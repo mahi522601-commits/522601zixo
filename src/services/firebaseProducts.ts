@@ -84,24 +84,26 @@ async function withTimeout<T>(promise: Promise<T>, message: string) {
 }
 
 async function uploadToImgBB(file: File) {
-  const body = new FormData();
-  body.set("image", file);
+  const formData = new FormData();
+  formData.append("image", file);
 
-  const response = await withTimeout(
-    fetch(`${BASE_URL}/api/upload-image`, {
+  const API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
+
+  const res = await withTimeout(
+    fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
       method: "POST",
-      body,
+      body: formData,
     }),
     "ImgBB upload did not respond within 15 seconds.",
   );
 
-  const payload = (await response.json()) as ImgBBResponse;
+  const data = (await res.json()) as ImgBBResponse;
 
-  if (!response.ok || !payload.data?.url) {
-    throw new Error(payload.error?.message || `Image upload failed with status ${response.status}.`);
+  if (!res.ok || !data.data?.url) {
+    throw new Error(data.error?.message || `Image upload failed with status ${res.status}.`);
   }
 
-  return payload.data.url;
+  return data.data.url;
 }
 
 export async function createFirebaseProduct(
