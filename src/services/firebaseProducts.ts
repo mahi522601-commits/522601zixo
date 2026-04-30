@@ -1,4 +1,4 @@
-export const BASE_URL = import.meta.env.VITE_API_URL || "";
+export const BASE_URL = import.meta.env.VITE_API_URL || "https://five22601zixo.onrender.com";
 
 export const getProducts = async () => {
   const res = await fetch(`${BASE_URL}/api/products`);
