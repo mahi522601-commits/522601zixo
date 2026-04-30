@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /images/
+
+Sitemap: https://zixocookies.in/sitemap.xml
