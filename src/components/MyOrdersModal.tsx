@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, Package, Calendar, Receipt } from "lucide-react";
 import { db } from "@/lib/firebase";
-import { collection, query, where, getDocs, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { useAuth } from "@/context/AuthContext";
 
 interface MyOrdersModalProps {
@@ -34,40 +34,33 @@ export default function MyOrdersModal({ isOpen, onClose }: MyOrdersModalProps) {
   useEffect(() => {
     if (!isOpen || !user) return;
 
-    setLoading(true);
-    const ordersRef = collection(db, "orders");
-    console.log("Fetching orders for UID:", user.uid);
-    const q = query(
-      ordersRef,
-      where("customerUid", "==", user.uid)
-    );
+    async function fetchUserOrders() {
+      setLoading(true);
+      try {
+        const ordersRef = collection(db, "orders");
+        const q = query(
+          ordersRef,
+          where("customerUid", "==", user?.uid || "")
+        );
+        const snapshot = await getDocs(q);
+        const ordersData = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+          } as Order;
+        });
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const ordersData = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          // Handle potential Firestore Timestamps
-          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : data.createdAt
-        } as Order;
-      });
+        // Sort by date locally if needed (createdAt could be timestamp)
+        setOrders(ordersData.reverse());
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-      // Sort by date descending (newest first)
-      const sortedOrders = ordersData.sort((a, b) => {
-        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return dateB - dateA;
-      });
-
-      setOrders(sortedOrders);
-      setLoading(false);
-    }, (error) => {
-      console.error("Failed to fetch orders:", error);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
+    void fetchUserOrders();
   }, [isOpen, user]);
 
   if (!isOpen) return null;

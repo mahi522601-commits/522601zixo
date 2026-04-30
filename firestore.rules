@@ -31,12 +31,7 @@ service cloud.firestore {
       allow read, write: if true;
     }
     match /orders/{orderId} {
-      // Allow user to read their own orders
-      allow read: if request.auth != null && resource.data.customerUid == request.auth.uid;
-      // Allow any authenticated user to create an order
-      allow create: if request.auth != null;
-      // Allow update/delete for maintenance (in production this should be restricted to admins)
-      allow update, delete: if true;
+      allow read, write: if true;
     }
   }
 }
