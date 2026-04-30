@@ -36,6 +36,7 @@ export default function MyOrdersModal({ isOpen, onClose }: MyOrdersModalProps) {
 
     setLoading(true);
     const ordersRef = collection(db, "orders");
+    console.log("Fetching orders for UID:", user.uid);
     const q = query(
       ordersRef,
       where("customerUid", "==", user.uid)
