@@ -154,27 +154,12 @@ export default function Checkout() {
           <p className="text-[#FFF8E7]/80 mb-6">
             Thank you for your order. We have received your payment screenshot and will begin processing your order shortly.
           </p>
-          <div className="flex flex-col gap-3">
-            <button
-              onClick={() => navigate("/")}
-              className="w-full bg-[#F0C040] text-[#0D0D0D] px-6 py-3 rounded-md font-bold hover:bg-[#C9960C] transition-colors shadow-md"
-            >
-              Return to Home
-            </button>
-            <button
-              onClick={() => {
-                navigate("/");
-                // We'll use a timeout to let the home page load then open the modal
-                setTimeout(() => {
-                  const event = new CustomEvent('open-orders-modal');
-                  window.dispatchEvent(event);
-                }, 100);
-              }}
-              className="w-full border border-[#C9960C]/30 text-[#FFF8E7] px-6 py-3 rounded-md font-bold hover:bg-[#2A1E00] transition-colors"
-            >
-              View My Orders
-            </button>
-          </div>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-[#F0C040] text-[#0D0D0D] px-6 py-3 rounded-md font-bold hover:bg-[#C9960C] transition-colors shadow-md"
+          >
+            Return to Home
+          </button>
         </div>
       </main>
     );
