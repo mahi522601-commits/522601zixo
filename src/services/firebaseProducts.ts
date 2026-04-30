@@ -1,3 +1,10 @@
+export const BASE_URL = import.meta.env.VITE_API_URL || "";
+
+export const getProducts = async () => {
+  const res = await fetch(`${BASE_URL}/api/products`);
+  return res.json();
+};
+
 import { FirebaseError } from "firebase/app";
 import { addDoc, collection, getDocs, orderBy, query, serverTimestamp, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -81,7 +88,7 @@ async function uploadToImgBB(file: File) {
   body.set("image", file);
 
   const response = await withTimeout(
-    fetch("/api/upload-image", {
+    fetch(`${BASE_URL}/api/upload-image`, {
       method: "POST",
       body,
     }),
@@ -155,7 +162,7 @@ export async function createFirebaseProduct(
   };
 
   try {
-    const res = await fetch("/api/products", {
+    const res = await fetch(`${BASE_URL}/api/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(finalProduct),
@@ -177,7 +184,7 @@ export async function getFirebaseProducts() {
   let apiProducts: FirebaseProduct[] = [];
   
   try {
-    const res = await fetch("/api/products");
+    const res = await fetch(`${BASE_URL}/api/products`);
     if (res.ok) {
       apiProducts = await res.json();
     }
@@ -197,14 +204,14 @@ export async function deleteFirebaseProduct(id: string) {
     return;
   }
 
-  const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+  const res = await fetch(`${BASE_URL}/api/products/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete product via API");
 }
 
 // Category Management Functions
 export async function createFirebaseCategory(name: string) {
   try {
-    const res = await fetch("/api/categories", {
+    const res = await fetch(`${BASE_URL}/api/categories`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
@@ -224,7 +231,7 @@ export async function createFirebaseCategory(name: string) {
 export async function getFirebaseCategories() {
   let apiCategories: FirebaseCategory[] = [];
   try {
-    const res = await fetch("/api/categories");
+    const res = await fetch(`${BASE_URL}/api/categories`);
     if (res.ok) {
       apiCategories = await res.json();
     }
@@ -265,6 +272,6 @@ export async function deleteFirebaseCategory(id: string) {
     return;
   }
 
-  const res = await fetch(`/api/categories/${id}`, { method: "DELETE" });
+  const res = await fetch(`${BASE_URL}/api/categories/${id}`, { method: "DELETE" });
   if (!res.ok) console.warn("Failed to delete category via API");
 }

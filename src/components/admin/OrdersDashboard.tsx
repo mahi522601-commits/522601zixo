@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Loader2, ExternalLink, Send, Trash2 } from "lucide-react";
+import { BASE_URL } from "@/services/firebaseProducts";
 
 export default function OrdersDashboard() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -11,7 +12,7 @@ export default function OrdersDashboard() {
 
   async function fetchOrders() {
     try {
-      const res = await fetch("/api/orders");
+      const res = await fetch(`${BASE_URL}/api/orders`);
       if (res.ok) {
         const data = await res.json();
         setOrders(data);
@@ -26,7 +27,7 @@ export default function OrdersDashboard() {
   async function deleteOrder(id: string) {
     if (!confirm("Are you sure you want to delete this order? This will remove it from Firebase.")) return;
     try {
-      const res = await fetch(`/api/orders/${id}`, { method: "DELETE" });
+      const res = await fetch(`${BASE_URL}/api/orders/${id}`, { method: "DELETE" });
       if (res.ok) {
         setOrders((prev) => prev.filter((o) => o.id !== id));
       }
@@ -37,7 +38,7 @@ export default function OrdersDashboard() {
 
   async function updateOrderStatus(id: string, newStatus: string) {
     try {
-      await fetch(`/api/orders/${id}`, {
+      await fetch(`${BASE_URL}/api/orders/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus })
@@ -53,7 +54,7 @@ export default function OrdersDashboard() {
     if (!trackingNo) return;
     
     try {
-      await fetch(`/api/orders/${order.id}`, {
+      await fetch(`${BASE_URL}/api/orders/${order.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ trackingDetails: trackingNo, status: "Shipped" })

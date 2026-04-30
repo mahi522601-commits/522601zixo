@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Loader2, User as UserIcon, Shield } from "lucide-react";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { BASE_URL } from "@/services/firebaseProducts";
 
 interface FirebaseUser {
   uid: string;
@@ -24,7 +25,7 @@ export default function UsersDashboard() {
   async function fetchUsers() {
     try {
       const [usersRes, adminsSnapshot] = await Promise.all([
-        fetch("/api/users"),
+        fetch(`${BASE_URL}/api/users`),
         getDocs(collection(db, "admins"))
       ]);
       

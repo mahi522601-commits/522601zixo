@@ -3,6 +3,7 @@ import type { CartItem, Product } from "@/types";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useAuth } from "@/context/AuthContext";
+import { BASE_URL } from "@/services/firebaseProducts";
 
 interface CartState {
   items: CartItem[];
@@ -96,7 +97,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!user) return;
     async function fetchCart() {
       try {
-        const res = await fetch(`/api/carts/${user?.uid}`);
+        const res = await fetch(`${BASE_URL}/api/carts/${user?.uid}`);
         if (res.ok) {
           const data = await res.json();
           if (data.items) {
@@ -116,7 +117,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!user || !hasFetchedCart.current) return;
     async function saveCart() {
       try {
-        await fetch(`/api/carts/${user?.uid}`, {
+        await fetch(`${BASE_URL}/api/carts/${user?.uid}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ items: state.items }),

@@ -12,6 +12,7 @@ import {
   deleteFirebaseCategory,
   type FirebaseProduct,
   type FirebaseCategory,
+  BASE_URL,
 } from "@/services/firebaseProducts";
 
 import OrdersDashboard from "../components/admin/OrdersDashboard";
@@ -100,7 +101,7 @@ export default function AdminPanel() {
     if (editingProduct) {
       setIsSaving(true);
       try {
-        const res = await fetch(`/api/products/${editingProduct.id}`, {
+        const res = await fetch(`${BASE_URL}/api/products/${editingProduct.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

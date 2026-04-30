@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { ImagePlus, Loader2, CheckCircle2 } from "lucide-react";
+import { BASE_URL } from "@/services/firebaseProducts";
 
 export default function Checkout() {
   const { state, totalPrice, clearCart } = useCart();
@@ -96,7 +97,7 @@ export default function Checkout() {
       // 1. Upload screenshot
       const formData = new FormData();
       formData.append("image", screenshot);
-      const uploadRes = await fetch("/api/upload-image", {
+      const uploadRes = await fetch(`${BASE_URL}/api/upload-image`, {
         method: "POST",
         body: formData,
       });
@@ -122,7 +123,7 @@ export default function Checkout() {
         trackingDetails: "",
       };
 
-      const orderRes = await fetch("/api/orders", {
+      const orderRes = await fetch(`${BASE_URL}/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
