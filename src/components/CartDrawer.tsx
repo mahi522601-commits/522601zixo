@@ -6,6 +6,7 @@ import { useCart } from "@/context/CartContext";
 export default function CartDrawer() {
   const { state, toggleCart, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
   const navigate = useNavigate();
+  const hasUnavailableItems = state.items.some((item) => item.isAvailable === false);
 
   return (
     <AnimatePresence>
@@ -68,6 +69,11 @@ export default function CartDrawer() {
                         <p className="text-sm text-[#F0C040] font-bold mt-1">
                           Rs. {item.price.toFixed(2)}
                         </p>
+                        {item.isAvailable === false && (
+                          <p className="text-[10px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded font-bold mt-1 inline-block border border-red-500/30">
+                            Item is no longer available
+                          </p>
+                        )}
                           <div className="flex items-center gap-1 mt-2">
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -109,12 +115,18 @@ export default function CartDrawer() {
                 </div>
                 <button 
                   onClick={() => {
+                    if (hasUnavailableItems) return;
                     toggleCart();
                     navigate("/checkout");
                   }}
-                  className="w-full bg-[#F0C040] text-[#0D0D0D] py-3 rounded-full font-bold hover:bg-[#C9960C] transition-colors shadow-md"
+                  disabled={hasUnavailableItems}
+                  className={`w-full py-3 rounded-full font-bold transition-colors shadow-md ${
+                    hasUnavailableItems 
+                      ? "bg-[#1E1600] text-red-500/50 border border-red-500/20 cursor-not-allowed" 
+                      : "bg-[#F0C040] text-[#0D0D0D] hover:bg-[#C9960C]"
+                  }`}
                 >
-                  Checkout
+                  {hasUnavailableItems ? "Remove unavailable items" : "Checkout"}
                 </button>
                 <button
                   onClick={toggleCart}

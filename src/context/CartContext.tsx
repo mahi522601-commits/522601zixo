@@ -97,12 +97,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!user) return;
     async function fetchCart() {
       try {
-        const res = await fetch(`${BASE_URL}/api/carts/${user?.uid}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data.items) {
-            dispatch({ type: "SET_ITEMS", payload: data.items });
+        const [cartRes, productsRes] = await Promise.all([
+          fetch(`${BASE_URL}/api/carts/${user?.uid}`),
+          fetch(`${BASE_URL}/api/products`)
+        ]);
+
+        if (cartRes.ok) {
+          const cartData = await cartRes.json();
+          let items = cartData.items || [];
+
+          if (productsRes.ok && items.length > 0) {
+            const latestProducts: Product[] = await productsRes.json();
+            items = items.map((item: CartItem) => {
+              const latest = latestProducts.find((p) => p.id === item.id);
+              if (latest) {
+                return { ...latest, quantity: item.quantity, isAvailable: true };
+              }
+              return { ...item, isAvailable: false };
+            });
           }
+          dispatch({ type: "SET_ITEMS", payload: items });
         }
       } catch (err) {
         console.error("Error loading cart:", err);

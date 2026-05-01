@@ -12,6 +12,7 @@ export interface Product {
 
 export interface CartItem extends Product {
   quantity: number;
+  isAvailable?: boolean;
 }
 
 export interface Category {

@@ -9,6 +9,7 @@ export default function Checkout() {
   const { state, totalPrice, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const hasUnavailableItems = state.items.some((item) => item.isAvailable === false);
   
   const [form, setForm] = useState({
     name: "",
@@ -83,6 +84,11 @@ export default function Checkout() {
 
     if (state.items.length === 0) {
       setError("Your cart is empty.");
+      return;
+    }
+
+    if (hasUnavailableItems) {
+      setError("Some items in your cart are no longer available. Please remove them before placing the order.");
       return;
     }
 
@@ -183,9 +189,14 @@ export default function Checkout() {
                 <div className="bg-[#2A1E00] rounded-md border border-[#C9960C]/20 p-4 space-y-3">
                   {state.items.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
-                      <span className="text-[#FFF8E7]/80">
-                        {item.name} <span className="text-[#FFF8E7]/50 font-medium">x{item.quantity}</span>
-                      </span>
+                      <div className="flex flex-col flex-1">
+                        <span className="text-[#FFF8E7]/80">
+                          {item.name} <span className="text-[#FFF8E7]/50 font-medium">x{item.quantity}</span>
+                        </span>
+                        {item.isAvailable === false && (
+                          <span className="text-[10px] text-red-500 font-bold">Item no longer available</span>
+                        )}
+                      </div>
                       <span className="font-bold text-[#FFF8E7]">
                         Rs. {(item.price * item.quantity).toFixed(2)}
                       </span>
@@ -285,7 +296,12 @@ export default function Checkout() {
                   <div id="order-lines-container">
                     {state.items.map((item) => (
                       <div key={item.id} className="flex justify-between py-2 border-b border-dashed border-[#C9960C]/20 last:border-0">
-                        <span className="text-[#FFF8E7]/80">{item.name} x{item.quantity}</span>
+                        <div className="flex flex-col">
+                          <span className="text-[#FFF8E7]/80">{item.name} x{item.quantity}</span>
+                          {item.isAvailable === false && (
+                            <span className="text-[10px] text-red-500 font-bold">Item no longer available</span>
+                          )}
+                        </div>
                         <span className="font-bold text-[#FFF8E7]">Rs. {(item.price * item.quantity).toFixed(2)}</span>
                       </div>
                     ))}
@@ -402,11 +418,15 @@ export default function Checkout() {
 
               <button
                 type="submit"
-                disabled={isSubmitting || state.items.length === 0}
-                className="w-full flex items-center justify-center gap-2 bg-[#F0C040] text-[#0D0D0D] py-4 rounded-md font-bold text-lg hover:bg-[#C9960C] disabled:opacity-70 disabled:cursor-not-allowed transition-colors shadow-md"
+                disabled={isSubmitting || state.items.length === 0 || hasUnavailableItems}
+                className={`w-full flex items-center justify-center gap-2 py-4 rounded-md font-bold text-lg transition-colors shadow-md ${
+                  hasUnavailableItems || isSubmitting || state.items.length === 0
+                    ? "bg-[#2A1E00] text-red-500/50 border border-red-500/20 cursor-not-allowed"
+                    : "bg-[#F0C040] text-[#0D0D0D] hover:bg-[#C9960C]"
+                }`}
               >
                 {isSubmitting && <Loader2 className="w-5 h-5 animate-spin" />}
-                {isSubmitting ? "Processing Order..." : "Place Order"}
+                {isSubmitting ? "Processing Order..." : hasUnavailableItems ? "Remove unavailable items" : "Place Order"}
               </button>
             </form>
           </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, User, ShoppingCart, Menu, X, ChevronDown, LogOut, Settings, ClipboardList } from "lucide-react";
+import { User, ShoppingCart, Menu, X, ChevronDown, LogOut, Settings, ClipboardList } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router";
@@ -58,17 +58,7 @@ export default function Header() {
               </span>
             </a>
 
-            {/* Search - Desktop */}
-            <div className="hidden md:flex flex-1 max-w-md mx-8">
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="w-full pl-4 pr-10 py-2 bg-[#1E1600] border border-[#C9960C]/30 rounded-full text-sm text-[#FFF8E7] placeholder-[#FFF8E7]/50 focus:outline-none focus:border-[#F0C040]"
-                />
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C9960C]" />
-              </div>
-            </div>
+
 
             {/* Actions */}
             <div className="flex items-center gap-2 sm:gap-4">
@@ -163,17 +153,6 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Mobile Search */}
-        <div className="md:hidden px-4 pb-3">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full pl-4 pr-10 py-2 bg-[#1E1600] border border-[#C9960C]/30 rounded-full text-sm text-[#FFF8E7] focus:outline-none focus:border-[#F0C040]"
-            />
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C9960C]" />
-          </div>
-        </div>
       </header>
 
       {/* Mobile Menu */}
