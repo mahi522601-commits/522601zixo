@@ -32,7 +32,7 @@ export default function Checkout() {
   useEffect(() => {
     const loadQRCode = async () => {
       const QRCode = await import('qrcode');
-      const upiString = `upi://pay?pa=9908918910@ybl&pn=Zixo&am=${totalPrice}&cu=INR&tn=Payment`;
+      const upiString = `upi://pay?pa=9908918910@ybl&pn=Zixocookies&am=${totalPrice}&cu=INR&tn=OrderPayment`;
       const qrContainer = document.getElementById('qrcode');
       if (qrContainer) {
         qrContainer.innerHTML = '';
@@ -53,13 +53,21 @@ export default function Checkout() {
   // Handle UPI Deep Links
   const handleUpiDeepLink = (app: string, amount: number) => {
     const upiId = "9908918910@ybl";
-    const payee = encodeURIComponent("Zixo");
+    const payee = encodeURIComponent("Zixocookies");
     const amt = amount.toFixed(2);
-    let url = `upi://pay?pa=${upiId}&pn=${payee}&am=${amt}&cu=INR&tn=Payment`;
+    let url = "";
 
-    // Standard UPI intent works best for security and cross-app compatibility
-    // We use the same standard URL for all, which helps bypass app-specific security restrictions
-    url = `upi://pay?pa=${upiId}&pn=${payee}&am=${amt}&cu=INR&tn=Payment`;
+    switch (app) {
+      case "phonepe":
+        url = `phonepe://pay?pa=${upiId}&pn=${payee}&am=${amt}&cu=INR&tn=OrderPayment`;
+        break;
+      case "gpay":
+        url = `tez://upi/pay?pa=${upiId}&pn=${payee}&am=${amt}&cu=INR&tn=OrderPayment`;
+        break;
+      case "paytm":
+        url = `paytmmp://pay?pa=${upiId}&pn=${payee}&am=${amt}&cu=INR&tn=OrderPayment`;
+        break;
+    }
 
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768;
 
