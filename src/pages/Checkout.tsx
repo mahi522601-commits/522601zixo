@@ -32,7 +32,7 @@ export default function Checkout() {
   useEffect(() => {
     const loadQRCode = async () => {
       const QRCode = await import('qrcode');
-      const upiString = `upi://pay?pa=sksaleemasksaleema40@oksbi&pn=Zixocookies&am=${totalPrice}&cu=INR&tn=OrderPayment`;
+      const upiString = `upi://pay?pa=8096697748@axl&pn=Zixocookies&am=${totalPrice}&cu=INR&tn=OrderPayment`;
       const qrContainer = document.getElementById('qrcode');
       if (qrContainer) {
         qrContainer.innerHTML = '';
@@ -52,7 +52,7 @@ export default function Checkout() {
 
   // Handle UPI Deep Links
   const handleUpiDeepLink = (app: string, amount: number) => {
-    const upiId = "sksaleemasksaleema40@oksbi";
+    const upiId = "8096697748@axl";
     const payee = encodeURIComponent("Zixocookies");
     const amt = amount.toFixed(2);
     let url = "";
@@ -318,7 +318,7 @@ export default function Checkout() {
                   <div className="bg-[#1E1600] rounded-2xl p-6 shadow-sm border border-[#C9960C]/30 flex flex-col items-center text-[#FFF8E7]">
                     <div className="text-center mb-4">
                       <div className="text-2xl font-black text-[#F0C040] mb-1">Rs. {totalPrice.toFixed(2)}</div>
-                      <div className="text-sm text-[#FFF8E7]/70 font-medium">sksaleemasksaleema40@oksbi</div>
+                      <div className="text-sm text-[#FFF8E7]/70 font-medium">8096697748@axl</div>
                     </div>
                     <div id="qrcode" className="p-2 bg-white border border-[#C9960C]/50 rounded-xl mb-3 shadow-md"></div>
                     <p className="text-xs text-[#FFF8E7]/70 text-center">Scan with any UPI app • Amount pre-filled</p>
