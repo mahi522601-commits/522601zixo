@@ -41,6 +41,7 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
       badge: "badge" in product ? product.badge : undefined,
     };
     addItem(cartItem);
+    onClose();
   };
 
   return (

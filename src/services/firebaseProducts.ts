@@ -26,6 +26,7 @@ export interface FirebaseProduct {
   name: string;
   category: string;
   price: number;
+  originalPrice?: number;
   details: string;
   imageUrl: string;
   detailImageUrl?: string;
